@@ -1,5 +1,0 @@
-/*
-    Have an abstract class 
-
-
-*/
