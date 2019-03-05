@@ -32,6 +32,7 @@ let Vtags_2 = [];
 function getRandInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
+
 function randString(text_1, randInd){
     let possible_1 = "abcdeodfg";        
     // let possible_2 = "bdhatikl";
