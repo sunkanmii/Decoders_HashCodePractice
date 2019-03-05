@@ -33,60 +33,104 @@ function getRandInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function randString(text_1, randInd){
+function randString(text_1, strNo){
     let possible_1 = "abcdeodfg";        
-    // let possible_2 = "bdhatikl";
     
-    for (let j = 0; j < randInd; j++){
+    for (let j = 0; j < strNo; j++){
         text_1 += possible_1.charAt(getRandInt(0, possible_1.length));
     }
-    // for(let j = 0; j < 3; j++){
-    //     text_2 += possible_2.charAt(getRandInt(0, possible_2.length));
-    //     text_2 = "";
-    // }
     return text_1;
 }
 
 //how many times i want this to iterate
 
 function example_a(index){
-
-    for(let i = 0; i < index; i++){  
-       
-        let Htag_randomIndex = getRandInt(1, 4); 
-        let Vtag_randomIndex = getRandInt(1, 4);     
+    let i;
+    for(i = 0; i < index; i++){  
+        
+        let Htag_randomIndex = getRandInt(2, 8);
+        let Htag_strLen = getRandInt(2, 4);
+        let Vtag_randomIndex = getRandInt(2, 8);
+        let Vtag_strLen = getRandInt(2, 4);     
         
         Htags_num[i] = new Array(Htag_randomIndex);  
         Vtags_1_num[i] = new Array(Vtag_randomIndex); 
+        photos_H[i] = new Array(Htag_randomIndex);
+        photos_V[i] = new Array(Vtag_randomIndex);
         
         for(let j = 0; j < Htag_randomIndex; j++){
-            Htags_num[i][j] = randString("", Htag_randomIndex);
+            Htags_num[i][j] = randString("", Htag_strLen);
         }
-        for(let j = 0; j < index; j++){
-            Vtags_1_num[i][j] = randString("", Vtag_randomIndex);
+        for(let j = 0; j < Vtag_randomIndex; j++){
+            Vtags_1_num[i][j] = randString("", Vtag_strLen);
         }
         for(let j = 0; j < Htag_randomIndex; j++){     
-            photos_H[i] = horizon + " " + Htags_num[i].length + " " + Htags_num[i][1]; 
+            photos_H[i][1] = horizon + " " + Htags_num[i].length + " " + Htags_num[i].join(" "); 
         }
         for(let j = 0; j < Vtag_randomIndex; j++){     
-            photos_V[i] = vertic + " " + Vtags_1_num[i].length + " " + Vtags_1_num[i][1];
+            photos_V[i][1] = vertic + " " + Vtags_1_num[i].length + " " + Vtags_1_num[i].join(" ");
         }
-        console.log(photos_H[i] + photos_V[i]);
+        photos.length = photos_V.length + photos_H.length;   
+        if(i === index - 1){
+            console.log(photos.length);
+            let k;
+            for(k = 0; k < index; k++){
+                
+                let Htag_randomIndex = getRandInt(2, 8);
+                let Htag_strLen = getRandInt(2, 4);
+                let Vtag_randomIndex = getRandInt(2, 8);
+                let Vtag_strLen = getRandInt(2, 4);     
+                let output = "";
+                Htags_num[i] = new Array(Htag_randomIndex);  
+                Vtags_1_num[i] = new Array(Vtag_randomIndex); 
+                photos_H[i] = new Array(Htag_randomIndex);
+                photos_V[i] = new Array(Vtag_randomIndex);
+                for(let j = 0; j < Htag_randomIndex; j++){
+                    Htags_num[i][j] = randString("", Htag_strLen);
+                }
+                for(let j = 0; j < Vtag_randomIndex; j++){
+                    Vtags_1_num[i][j] = randString("", Vtag_strLen);
+                }
+                for(let j = 0; j < Htag_randomIndex; j++){     
+                    photos_H[i][1] = horizon + " " + Htags_num[i].length + " " + Htags_num[i].join(" "); 
+                }
+                for(let j = 0; j < Vtag_randomIndex; j++){     
+                    photos_V[i][1] = vertic + " " + Vtags_1_num[i].length + " " + Vtags_1_num[i].join(" ");
+                }
+                while(k !== index - 1){
+                    output_1 = getRandInt(1, 3);
+                    output_2 = getRandInt(1, 3);
+                    if(output_1 === 1 && output_2 === 1){
+                        output += photos_H[i][1] + photos_H[i][1];
+                    }
+                    else if(output_1 === 1 && output_2 === 2){
+                        output += photos_H[i][1] + photos_V[i][1];
+                    }
+                    else if(output_1 === 2 && output_2 === 1){
+                        output += photos_V[i][1] + photos_H[i][1];
+                    }
+                    else if(output_1 === 2 && output_2 === 2){
+                        output += photos_V[i][1] + photos_V[i][1];
+                    }
+                    else{
+                        output += photos_H[i][1] + photos_V[i][1];
+                    }
+                    if(output.length === 156){
+                        output += "\n"
+                    }
+                }
+            }
+        }
     }
-    
-    photos.length = photos_V.length + photos_H.length;
-    console.log(photos.length)
 }
-
 // function makeid() {
-//     var text = "";
-//     var possible = "ABCDEFG";
-  
-//     for (var i = 0; i < 5; i++)
+    //     var text = "";
+    //     var possible = "ABCDEFG";
+    
+    //     for (var i = 0; i < 5; i++)
 //       text += possible.charAt(Math.floor(Math.random() * possible.length));
   
 //     return text;
 //   }
 
-
-example_a(3);
+example_a(4);
