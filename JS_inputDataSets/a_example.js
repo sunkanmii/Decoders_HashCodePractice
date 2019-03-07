@@ -17,6 +17,7 @@ let fs = require("fs");
 // let str1 = fs.readFile('../Data_sets/a_example.txt', "utf-8", function(err, buf){
 //     console.log(buf.toString());
 // });
+let i = 0;
 
 let path = require("path");
 let path1 = path.join(__dirname, '..', 'Data_sets', 'a_example.txt'); 
@@ -27,24 +28,26 @@ console.log(str1)
 let lineReader = require('readline').createInterface({
     input: require('fs').createReadStream('../Data_sets/a_example.txt')
 });
-
 lineReader.on('line', function (line) {
     if(isNaN(parseInt(line))){
-        for(let i = 0 ; i < slides; i++){
-            photos[i] = line.split(" ");
-            if(photos[i] == photos[i + 1]){        
-                break;
-            }
-        }
-        for(let j = 0; j < 4; j++){
-            console.log(photos[i]);
-        }
         console.log('Line from file:', line);
-    }
-        else{
-            slides = parseInt(line);
-            console.log(slides);
+        for(; i < slides; ){
+            photos[i] = line.split(" ");
+            console.log(photos[i]);
+            i++;
+            break;
         }
+        if(i === 4){
+        for(j = 0; j < slides; j++){
+            console.log(photos[j]);
+    }
+    }
+}
+    else{
+        slides = parseInt(line);
+        console.log(slides);
+    }
+
     });
 
 // function shuffleArr(array){
