@@ -3,8 +3,8 @@ let slides;
 let horizon = 'H';
 let vertic = 'V';
 
-let photos_H = [];
-let photos_V = [];
+let photos_H = 0;
+let photos_V = 0;
 let photos = [];
 
 let Htags_num = [];
@@ -14,13 +14,38 @@ let fs = require("fs");
 
 //If you need to access the file directly...not sure
 //if this a practised method
-let str1 = fs.readFile('../Data_sets/a_example.txt', "utf-8", function(err, buf){
-    console.log(buf.toString());
+// let str1 = fs.readFile('../Data_sets/a_example.txt', "utf-8", function(err, buf){
+//     console.log(buf.toString());
+// });
+
+let path = require("path");
+let path1 = path.join(__dirname, '..', 'Data_sets', 'a_example.txt'); 
+let str1 = fs.readFileSync(path1, 'utf8');
+
+console.log(str1)
+
+let lineReader = require('readline').createInterface({
+    input: require('fs').createReadStream('../Data_sets/a_example.txt')
 });
-// let path = require("path");
-// let path1 = path.join(__dirname, '..', 'Data_sets', 'a_example.js'); 
-// let str1 = fs.readFileSync(path1, 'utf8');
-// var textByLine = text.split("\n")
+
+lineReader.on('line', function (line) {
+    if(isNaN(parseInt(line))){
+        for(let i = 0 ; i < slides; i++){
+            photos[i] = line.split(" ");
+            if(photos[i] == photos[i + 1]){        
+                break;
+            }
+        }
+        for(let j = 0; j < 4; j++){
+            console.log(photos[i]);
+        }
+        console.log('Line from file:', line);
+    }
+        else{
+            slides = parseInt(line);
+            console.log(slides);
+        }
+    });
 
 // function shuffleArr(array){
     //     var currentIndex = array.length, temporaryValue, randomIndex;
