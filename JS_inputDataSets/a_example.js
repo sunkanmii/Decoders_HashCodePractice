@@ -1,5 +1,5 @@
 let slides;
-
+let my_slides = [];
 let horizon = 'H';
 let vertic = 'V';
 
@@ -20,54 +20,88 @@ let fs = require("fs");
 let i = 0;
 
 let path = require("path");
-let path1 = path.join(__dirname, '..', 'Data_sets', 'a_example.txt'); 
+let path1 = path.join(__dirname, '..', 'Data_sets', 'a_example.txt');
 let str1 = fs.readFileSync(path1, 'utf8');
-
-console.log(str1)
 
 let lineReader = require('readline').createInterface({
     input: require('fs').createReadStream('../Data_sets/a_example.txt')
 });
+
+function getRandInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
 lineReader.on('line', function (line) {
-    if(isNaN(parseInt(line))){
-        console.log('Line from file:', line);
-        for(; i < slides; ){
+    if (isNaN(parseInt(line))) {
+        for (; i < slides;) {
             photos[i] = line.split(" ");
-            console.log(photos[i]);
             i++;
             break;
         }
-        if(i === 4){
-        for(j = 0; j < slides; j++){
-            console.log(photos[j]);
-    }
-    }
-}
-    else{
+        if (i === 4) {
+            let p1;
+            let p2;
+            let p3;
+            let p4;
+            let n1 = 0;
+            let n2 = 1;
+            let n3 = 1;
+            let n4 = 1;
+            let mid = photos.length / 2;
+            for (let j = 0; j < mid; j++) {
+                my_slides[j] = [photos[n1], photos[n2]];
+                n1 = n1 + 2;
+                n2 = n2 + 2;
+                for (let k = 0; k < mid; k++) {
+                    for (let l = 0; l < photos.length - 1; l++) {
+                        for (let z = 1; z < photos.length; z++) {
+                            if (my_slides[j][k] === photos[l] && my_slides[j][n3] === photos[z]) {
+                                p1 = l;
+                                p2 = z;             
+                            }
+                        }
+                    }
+                    n3++;
+                }
+            }
+            for(let j = 1; j < mid; j++){
+                for (let k = 0; k < mid; k++) {
+                    for (let r = 0; r < photos.length - 1; r++) {
+                        for (let t = 1; t < photos.length; t++) {
+                            if (my_slides[j][k] === photos[r] && my_slides[j][n4] === photos[t]) {
+                                p3 = r;
+                                p4 = t;
+                            }
+                        }
+                    }
+                    n4++;
+                }
+            }
+            let lenArr = my_slides.length;
+            console.log(lenArr);
+            console.log(p1 + " " + p2);
+            console.log(p3 + " " + p4);
+        }
+    } else {
         slides = parseInt(line);
-        console.log(slides);
     }
-
-    });
+});
 
 // function shuffleArr(array){
-    //     var currentIndex = array.length, temporaryValue, randomIndex;
-    //     while (0 !== currentIndex) {
-        //       randomIndex = Math.floor(Math.random() * currentIndex);
-        //       currentIndex -= 1;  
-        //       temporaryValue = array[currentIndex];
-        //       array[currentIndex] = array[randomIndex];
-        //       array[randomIndex] = temporaryValue;
-        //     }
+//     var currentIndex = array.length, temporaryValue, randomIndex;
+//     while (0 !== currentIndex) {
+//       randomIndex = Math.floor(Math.random() * currentIndex);
+//       currentIndex -= 1;  
+//       temporaryValue = array[currentIndex];
+//       array[currentIndex] = array[randomIndex];
+//       array[randomIndex] = temporaryValue;
+//     }
 //     return array;
 // // }
-// function getRandInt(min, max) {
-//     return Math.floor(Math.random() * (max - min)) + min;
-// }
 
 // function randString(text_1, strNo){
 //     let possible_1 = "abcdeodfg";        
-    
+
 //     for (let j = 0; j < strNo; j++){
 //         text_1 += possible_1.charAt(getRandInt(0, possible_1.length));
 //     }
@@ -79,17 +113,17 @@ lineReader.on('line', function (line) {
 // function example_a(index){
 //     let i;
 //     for(i = 0; i < index; i++){  
-        
+
 //         let Htag_randomIndex = getRandInt(2, 8);
 //         let Htag_strLen = getRandInt(2, 4);
 //         let Vtag_randomIndex = getRandInt(2, 8);
 //         let Vtag_strLen = getRandInt(2, 4);     
-        
+
 //         Htags_num[i] = new Array(Htag_randomIndex);  
 //         Vtags_1_num[i] = new Array(Vtag_randomIndex); 
 //         photos_H[i] = new Array(Htag_randomIndex);
 //         photos_V[i] = new Array(Vtag_randomIndex);
-        
+
 //         for(let j = 0; j < Htag_randomIndex; j++){
 //             Htags_num[i][j] = randString("", Htag_strLen);
 //         }
@@ -107,7 +141,7 @@ lineReader.on('line', function (line) {
 //             console.log(photos.length);
 //             let k;
 //             for(k = 0; k < index; k++){
-                
+
 //                 let Htag_randomIndex = getRandInt(2, 8);
 //                 let Htag_strLen = getRandInt(2, 4);
 //                 let Vtag_randomIndex = getRandInt(2, 8);
@@ -158,10 +192,10 @@ lineReader.on('line', function (line) {
 // // function makeid() {
 //     //     var text = "";
 //     //     var possible = "ABCDEFG";
-    
+
 //     //     for (var i = 0; i < 5; i++)
 // //       text += possible.charAt(Math.floor(Math.random() * possible.length));
-  
+
 // //     return text;
 // //   }
 
