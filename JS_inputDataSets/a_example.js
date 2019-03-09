@@ -39,48 +39,46 @@ lineReader.on('line', function (line) {
             break;
         }
         if (i === 4) {
-            let p1;
-            let p2;
+            let p1 = [];
+            let p2 = [];
             let p3;
             let p4;
+            let i = 0;
+            let j = 0;
             let n1 = 0;
-            let n2 = 1;
+            let n2 = 0;
             let n3 = 1;
-            let n4 = 1;
-            let mid = photos.length / 2;
-            for (let j = 0; j < mid; j++) {
-                my_slides[j] = [photos[n1], photos[n2]];
-                n1 = n1 + 2;
-                n2 = n2 + 2;
-                for (let k = 0; k < mid; k++) {
-                    for (let l = 0; l < photos.length - 1; l++) {
-                        for (let z = 1; z < photos.length; z++) {
-                            if (my_slides[j][k] === photos[l] && my_slides[j][n3] === photos[z]) {
-                                p1 = l;
-                                p2 = z;             
-                            }
-                        }
-                    }
+            let num_h = 0;
+            let num_v = 0;
+            while (photos[i] !== undefined) {
+                if (photos[n1][n2] === 'H') {
+                    my_slides[j] = [photos[n1]];
+                    p1[num_h] = n1;
+                    j++;
+                    n1++;
+                    n3++;
+                    num_h++;
+                } else if (photos[n1][n2] === 'V' && photos[n3][n2] === 'V') {
+                    my_slides[j] = [photos[n1], photos[n3]];
+                    p2[num_v] = [n1, n3];
+                    j++;
+                    n1++;
+                    n3++;
+                    num_v++;
+                } else {
+                    n1++;
                     n3++;
                 }
-            }
-            for(let j = 1; j < mid; j++){
-                for (let k = 0; k < mid; k++) {
-                    for (let r = 0; r < photos.length - 1; r++) {
-                        for (let t = 1; t < photos.length; t++) {
-                            if (my_slides[j][k] === photos[r] && my_slides[j][n4] === photos[t]) {
-                                p3 = r;
-                                p4 = t;
-                            }
-                        }
-                    }
-                    n4++;
-                }
+                i++;
             }
             let lenArr = my_slides.length;
             console.log(lenArr);
-            console.log(p1 + " " + p2);
-            console.log(p3 + " " + p4);
+            for (let j = 0; j < p1.length; j++) {
+                console.log(p1[j]);
+            }
+            for(let k = 0; k < p2.length; k++){
+                console.log(p2[k].join(' '));
+            }
         }
     } else {
         slides = parseInt(line);
